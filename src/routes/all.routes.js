@@ -28,6 +28,10 @@ allRouter.get('/new', async (req, res) => {
         user.publications.push(publication1)
         user.publications.push(publication2)
 
+        await UserModel.findByIdAndUpdate(user._id, {
+            publications:  { $push: publication1._id } // { $pull: publication1._id } para sacar
+        }, {new: true})
+
         await user.save();
 
         res.status(201).json({
